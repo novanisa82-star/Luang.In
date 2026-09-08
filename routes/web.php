@@ -19,6 +19,10 @@ Route::middleware(['admin.auth'])->group(function () {
         Route::get('/admin/lowongan', [LowonganController::class, 'index'])->name('lowongan.index');
         Route::get('/admin/lowongan/tambah', [LowonganController::class, 'create'])->name('lowongan.create');
         Route::post('/admin/lowongan', [LowonganController::class, 'store'])->name('lowongan.store');
+        Route::get('/admin/lowongan/{id}', [LowonganController::class, 'show'])->name('lowongan.show');
+        Route::get('/admin/lowongan/{id}/edit', [LowonganController::class, 'edit'])->name('lowongan.edit');
+        Route::put('/admin/lowongan/{id}', [LowonganController::class, 'update'])->name('lowongan.update');
+        Route::delete('/admin/lowongan/{id}', [LowonganController::class, 'destroy'])->name('lowongan.destroy');
     });
 
     // Rute Khusus Superadmin (Verifikasi PT & Moderasi Lowongan)

@@ -38,6 +38,14 @@
                 </a>
             </div>
 
+            @if (session('success'))
+                <div
+                    class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-2.5 shadow-sm">
+                    <span class="material-symbols-outlined text-[20px] text-emerald-600 shrink-0">check_circle</span>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
+
 
             <!-- Tabel Card -->
             <div
@@ -113,7 +121,6 @@
                         <tbody class="divide-y divide-surface-container">
 
                             @forelse($lowongans ?? [] as $job)
-
                                 <tr
                                     class="group text-sm transition-colors duration-150
                                            hover:bg-surface-container-low/60">
@@ -196,38 +203,51 @@
 
                                         <div class="flex items-center justify-end gap-2">
 
+                                            <!-- Lihat / Detail -->
+                                            <a href="{{ route('admin_pt.lowongan.show', $job->id) }}"
+                                                title="Lihat Detail Lowongan"
+                                                class="flex h-9 w-9 items-center justify-center
+                                                       rounded-lg border border-gray-200
+                                                       bg-gray-50 text-gray-600
+                                                       transition-all duration-200
+                                                       hover:bg-purple-700 hover:text-white hover:border-purple-700
+                                                       hover:shadow-sm">
+                                                <span class="material-symbols-outlined text-[18px]">
+                                                    visibility
+                                                </span>
+                                            </a>
+
                                             <!-- Edit -->
-                                            <a href="#"
-                                                title="Edit Lowongan"
+                                            <a href="{{ route('admin_pt.lowongan.edit', $job->id) }}" title="Edit Lowongan"
                                                 class="flex h-9 w-9 items-center justify-center
                                                        rounded-lg border border-primary/20
                                                        bg-primary/5 text-primary
                                                        transition-all duration-200
                                                        hover:bg-primary hover:text-white
                                                        hover:shadow-sm">
-
                                                 <span class="material-symbols-outlined text-[18px]">
                                                     edit
                                                 </span>
-
                                             </a>
-
 
                                             <!-- Hapus -->
-                                            <a href="#"
-                                                title="Hapus Lowongan"
-                                                class="flex h-9 w-9 items-center justify-center
-                                                       rounded-lg border border-red-200
-                                                       bg-red-50 text-red-500
-                                                       transition-all duration-200
-                                                       hover:bg-red-500 hover:text-white
-                                                       hover:shadow-sm">
-
-                                                <span class="material-symbols-outlined text-[18px]">
-                                                    delete
-                                                </span>
-
-                                            </a>
+                                            <form action="{{ route('admin_pt.lowongan.destroy', $job->id) }}" method="POST"
+                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?')"
+                                                class="inline m-0 p-0">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" title="Hapus Lowongan"
+                                                    class="flex h-9 w-9 items-center justify-center
+                                                           rounded-lg border border-red-200
+                                                           bg-red-50 text-red-500
+                                                           transition-all duration-200
+                                                           hover:bg-red-500 hover:text-white
+                                                           hover:shadow-sm">
+                                                    <span class="material-symbols-outlined text-[18px]">
+                                                        delete
+                                                    </span>
+                                                </button>
+                                            </form>
 
                                         </div>
 
@@ -247,8 +267,7 @@
                                                 class="flex h-16 w-16 items-center justify-center
                                                        rounded-2xl bg-surface-container">
 
-                                                <span
-                                                    class="material-symbols-outlined text-[34px] text-secondary/50">
+                                                <span class="material-symbols-outlined text-[34px] text-secondary/50">
                                                     work_off
                                                 </span>
 
@@ -268,7 +287,6 @@
 
                                     </td>
                                 </tr>
-
                             @endforelse
 
                         </tbody>
@@ -279,11 +297,9 @@
 
                 <!-- Pagination -->
                 @if (isset($lowongans) && method_exists($lowongans, 'links'))
-
                     <div class="border-t border-surface-container px-6 py-4">
                         {{ $lowongans->links() }}
                     </div>
-
                 @endif
 
             </div>
