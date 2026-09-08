@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pekerjaan extends Model
 {
-    //
+    protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
