@@ -166,10 +166,17 @@
                             <p class="text-xs text-gray-500 mt-0.5">Daftar kandidat pekerja yang melamar pada lowongan ini.
                             </p>
                         </div>
-                        <span
-                            class="px-3 py-1 rounded-full bg-purple-50 text-purple-700 border border-purple-100 text-xs font-bold">
-                            {{ $lowongan->applications ? $lowongan->applications->count() : 0 }} Pelamar
-                        </span>
+                        <div class="flex items-center gap-2">
+                            <span
+                                class="px-3 py-1 rounded-full bg-purple-50 text-purple-700 border border-purple-100 text-xs font-bold">
+                                {{ $lowongan->applications ? $lowongan->applications->count() : 0 }} Pelamar
+                            </span>
+                            <a href="{{ route('admin_pt.pelamar.index', ['pekerjaan_id' => $lowongan->id]) }}"
+                                class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#6b21a8] text-white text-xs font-bold hover:bg-[#581c87] transition shadow-sm">
+                                <span>Kelola Pelamar</span>
+                                <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto">

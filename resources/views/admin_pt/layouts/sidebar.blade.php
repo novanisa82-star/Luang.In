@@ -32,14 +32,14 @@
 
                 <!-- Menu Pelamar -->
                 <a class="flex items-center gap-3 px-4 py-3 transition-all rounded-xl {{ request()->routeIs('admin_pt.pelamar*') ? 'bg-[#ede9fe] text-[#6b21a8] font-bold' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium' }}"
-                    href="#">
+                    href="{{ route('admin_pt.pelamar.index') }}">
                     <span class="material-symbols-outlined text-[22px]">group</span>
                     <span class="text-sm">Pelamar</span>
                 </a>
 
                 <!-- Menu Riwayat -->
                 <a class="flex items-center gap-3 px-4 py-3 transition-all rounded-xl {{ request()->routeIs('admin_pt.riwayat*') ? 'bg-[#ede9fe] text-[#6b21a8] font-bold' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium' }}"
-                    href="#">
+                    href="{{ route('admin_pt.riwayat.index') }}">
                     <span class="material-symbols-outlined text-[22px]">history</span>
                     <span class="text-sm">Riwayat</span>
                 </a>

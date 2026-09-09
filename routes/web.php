@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\AdminWebController;
 use App\Http\Controllers\AdminPt\LowonganController;
+use App\Http\Controllers\AdminPt\PelamarController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
@@ -23,6 +24,11 @@ Route::middleware(['admin.auth'])->group(function () {
         Route::get('/admin/lowongan/{id}/edit', [LowonganController::class, 'edit'])->name('lowongan.edit');
         Route::put('/admin/lowongan/{id}', [LowonganController::class, 'update'])->name('lowongan.update');
         Route::delete('/admin/lowongan/{id}', [LowonganController::class, 'destroy'])->name('lowongan.destroy');
+
+        // Rute Manajemen Pelamar & Riwayat Masuk (Admin PT)
+        Route::get('/admin/pelamar', [PelamarController::class, 'index'])->name('pelamar.index');
+        Route::get('/admin/riwayat', [PelamarController::class, 'index'])->name('riwayat.index');
+        Route::patch('/admin/pelamar/{id}/status', [PelamarController::class, 'updateStatus'])->name('pelamar.update_status');
     });
 
     // Rute Khusus Superadmin (Verifikasi PT & Moderasi Lowongan)
