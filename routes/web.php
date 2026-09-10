@@ -27,7 +27,7 @@ Route::middleware(['admin.auth'])->group(function () {
 
         // Rute Manajemen Pelamar & Riwayat Masuk (Admin PT)
         Route::get('/admin/pelamar', [PelamarController::class, 'index'])->name('pelamar.index');
-        Route::get('/admin/riwayat', [PelamarController::class, 'index'])->name('riwayat.index');
+        Route::get('/admin/riwayat', [PelamarController::class, 'riwayat'])->name('riwayat.index');
         Route::patch('/admin/pelamar/{id}/status', [PelamarController::class, 'updateStatus'])->name('pelamar.update_status');
     });
 
