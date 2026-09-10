@@ -30,14 +30,14 @@
                     <div class="flex items-start justify-between">
                         <div>
                             <span class="text-sm text-secondary">Lowongan Aktif</span>
-                            <h3 class="text-3xl font-bold text-on-surface mt-2">8</h3>
+                            <h3 class="text-3xl font-bold text-on-surface mt-2">{{ $lowonganAktifCount ?? 0 }}</h3>
                         </div>
                         <div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center text-primary">
                             <span class="material-symbols-outlined text-[22px]">work</span>
                         </div>
                     </div>
                     <div class="mt-4 text-xs font-medium text-tertiary flex items-center gap-1">
-                        <span class="material-symbols-outlined text-[16px]">trending_up</span> 2 lowongan baru minggu ini
+                        <span class="material-symbols-outlined text-[16px]">trending_up</span> Lowongan aktif perusahaan
                     </div>
                 </div>
 
@@ -46,14 +46,14 @@
                     <div class="flex items-start justify-between">
                         <div>
                             <span class="text-sm text-secondary">Pelamar Masuk</span>
-                            <h3 class="text-3xl font-bold text-on-surface mt-2">24</h3>
+                            <h3 class="text-3xl font-bold text-on-surface mt-2">{{ $pelamarMasukCount ?? 0 }}</h3>
                         </div>
                         <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700">
                             <span class="material-symbols-outlined text-[22px]">group</span>
                         </div>
                     </div>
                     <div class="mt-4 text-xs font-medium text-amber-700 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-[16px]">schedule</span> Perlu ditinjau segera
+                        <span class="material-symbols-outlined text-[16px]">schedule</span> Total pelamar masuk
                     </div>
                 </div>
 
@@ -62,14 +62,14 @@
                     <div class="flex items-start justify-between">
                         <div>
                             <span class="text-sm text-secondary">Kandidat Diterima</span>
-                            <h3 class="text-3xl font-bold text-on-surface mt-2">15</h3>
+                            <h3 class="text-3xl font-bold text-on-surface mt-2">{{ $kandidatDiterimaCount ?? 0 }}</h3>
                         </div>
                         <div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
                             <span class="material-symbols-outlined text-[22px]">check_circle</span>
                         </div>
                     </div>
                     <div class="mt-4 text-xs font-medium text-emerald-700 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-[16px]">verified</span> Tingkat konversi 62.5%
+                        <span class="material-symbols-outlined text-[16px]">verified</span> Kandidat siap dipekerjakan
                     </div>
                 </div>
             </div>
@@ -95,8 +95,8 @@
             <!-- 4. Tabel Daftar Lowongan -->
             <div class="bg-surface-container-lowest rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-lg font-bold text-on-surface">Status Lowongan Perusahaan</h2>
-                    <span class="text-xs text-secondary font-medium">Menampilkan lowongan aktif</span>
+                    <h2 class="text-lg font-bold text-on-surface">Status Lowongan Terbaru Perusahaan</h2>
+                    <a href="{{ route('admin_pt.lowongan.index') }}" class="text-xs text-primary font-semibold hover:underline">Lihat Semua Lowongan</a>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-surface-container">
@@ -109,18 +109,22 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-surface-container text-sm">
-                            @forelse($pendingPekerjaan ?? [] as $job)
+                            @forelse($recentPekerjaan ?? [] as $job)
                                 <tr>
                                     <td class="py-4 font-semibold text-on-surface">{{ $job->judul }}</td>
-                                    <td class="py-4 text-secondary">Rp {{ number_format($job->upah, 0, ',', '.') }} /
+                                    <td class="py-4 text-secondary">Rp {{ number_format((float)$job->upah, 0, ',', '.') }} /
                                         {{ $job->durasi }}</td>
                                     <td class="py-4">
-                                        <span
-                                            class="px-2.5 py-1 text-xs rounded-full bg-amber-100 text-amber-800 font-medium">Menunggu
-                                            Verifikasi</span>
+                                        @if ($job->status_moderasi === 'menunggu')
+                                            <span class="px-2.5 py-1 text-xs rounded-full bg-amber-100 text-amber-800 font-medium">Menunggu Verifikasi</span>
+                                        @elseif ($job->status_moderasi === 'ditolak')
+                                            <span class="px-2.5 py-1 text-xs rounded-full bg-red-100 text-red-800 font-medium">Ditolak</span>
+                                        @else
+                                            <span class="px-2.5 py-1 text-xs rounded-full bg-emerald-100 text-emerald-800 font-medium">Aktif</span>
+                                        @endif
                                     </td>
                                     <td class="py-4 space-x-2">
-                                        <a href="#"
+                                        <a href="{{ route('admin_pt.lowongan.show', $job->id) }}"
                                             class="text-primary hover:underline font-semibold text-xs">Detail</a>
                                     </td>
                                 </tr>
@@ -130,7 +134,7 @@
                                         <div class="flex flex-col items-center justify-center gap-1">
                                             <span
                                                 class="material-symbols-outlined text-[32px] text-secondary/60">work_off</span>
-                                            <span>Belum ada lowongan aktif yang ditambahkan.</span>
+                                            <span>Belum ada lowongan yang ditambahkan.</span>
                                         </div>
                                     </td>
                                 </tr>
