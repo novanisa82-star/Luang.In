@@ -23,6 +23,68 @@
                 </div>
             </div>
 
+            <!-- Warning Pengaduan / Peringatan dari Superadmin (Jika Ada) -->
+            @if(isset($activeWarnings) && $activeWarnings->isNotEmpty())
+                <div class="bg-red-50/90 border-2 border-red-300 rounded-2xl p-6 shadow-sm space-y-4 animate-fade-in">
+                    <div class="flex items-start gap-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center shrink-0 shadow-sm animate-pulse">
+                            <span class="material-symbols-outlined text-[24px]">warning</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                <h3 class="text-base font-extrabold text-red-950">
+                                    PERINGATAN DARI SUPERADMIN: Terdapat {{ $activeWarnings->count() }} Pengaduan Aktif
+                                </h3>
+                                <span class="px-3 py-1 rounded-full bg-red-200 text-red-900 text-xs font-black uppercase w-fit">
+                                    Perlu Perhatian Segera
+                                </span>
+                            </div>
+                            <p class="text-xs text-red-800 mt-1 leading-relaxed">
+                                Terdapat laporan pengaduan dari pekerja/pelamar terkait operasional atau lowongan perusahaan Anda. Harap segera tindak lanjuti dan patuhi instruksi Superadmin di bawah ini untuk menghindari penonaktifan (suspend) akun PT.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-2">
+                        @foreach($activeWarnings as $warning)
+                            <div class="bg-white rounded-xl p-4 border border-red-200/80 shadow-sm space-y-2">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-2">
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-0.5 rounded text-[11px] font-extrabold bg-red-100 text-red-800">
+                                            #LAP-{{ $warning->id }}
+                                        </span>
+                                        <span class="text-xs font-bold text-gray-900">{{ $warning->judul }}</span>
+                                    </div>
+                                    <span class="text-[11px] text-gray-400 font-semibold">
+                                        {{ $warning->created_at ? $warning->created_at->translatedFormat('d M Y, H:i') : '-' }} WIB
+                                    </span>
+                                </div>
+
+                                <p class="text-xs text-gray-600 leading-relaxed">
+                                    <span class="font-semibold text-gray-800">Detail Aduan:</span> {{ $warning->deskripsi }}
+                                </p>
+
+                                @if($warning->pekerjaan)
+                                    <p class="text-xs text-purple-700 font-semibold">
+                                        Lowongan Terkait: {{ $warning->pekerjaan->judul }}
+                                    </p>
+                                @endif
+
+                                @if($warning->tindakan_superadmin)
+                                    <div class="p-3 bg-red-50/70 border border-red-200 rounded-xl text-xs text-red-950 flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-[18px] text-red-600 shrink-0 mt-0.5">gavel</span>
+                                        <div>
+                                            <span class="font-extrabold block text-red-900 uppercase text-[10px]">Instruksi / Catatan Superadmin:</span>
+                                            <span class="font-semibold">{{ $warning->tindakan_superadmin }}</span>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             <!-- 2. Grid 3 Card Metrik -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div

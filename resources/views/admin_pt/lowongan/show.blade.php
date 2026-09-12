@@ -49,6 +49,25 @@
             </div>
         </div>
 
+        <!-- 2.5 Banner Status Moderasi Superadmin -->
+        @if (($lowongan->status_moderasi ?? 'menunggu') === 'menunggu')
+            <div class="p-4 sm:p-5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 flex items-start gap-3.5 shadow-sm">
+                <span class="material-symbols-outlined text-[24px] text-amber-600 shrink-0 mt-0.5">pending_actions</span>
+                <div class="text-xs sm:text-sm leading-relaxed">
+                    <strong class="font-bold text-gray-900 block mb-0.5">Lowongan Sedang Menunggu Persetujuan (ACC) Superadmin:</strong>
+                    Lowongan ini telah berhasil diposting dan saat ini berada di antrean moderasi Superadmin. Lowongan baru akan tayang aktif ke aplikasi pencari kerja setelah disetujui (di-ACC) oleh Superadmin.
+                </div>
+            </div>
+        @elseif (($lowongan->status_moderasi ?? '') === 'ditolak')
+            <div class="p-4 sm:p-5 rounded-2xl bg-red-50 border border-red-200 text-red-900 flex items-start gap-3.5 shadow-sm">
+                <span class="material-symbols-outlined text-[24px] text-red-600 shrink-0 mt-0.5">cancel</span>
+                <div class="text-xs sm:text-sm leading-relaxed">
+                    <strong class="font-bold text-gray-900 block mb-0.5">Lowongan Ditolak oleh Superadmin:</strong>
+                    Lowongan ini tidak disetujui untuk tayang. Silakan periksa kembali detail pekerjaan atau edit dan sesuaikan kualifikasi serta upah kerja.
+                </div>
+            </div>
+        @endif
+
         <!-- 3. Main Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
@@ -60,7 +79,7 @@
                     class="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-gray-100 p-6 sm:p-8 space-y-6">
 
                     <!-- Status Badges -->
-                    <div class="flex flex-wrap items-center gap-3 pb-4 border-b border-gray-100">
+                    <div class="flex flex-wrap items-center gap-4 pb-4 border-b border-gray-100">
                         <div>
                             <span class="text-xs text-gray-400 block mb-1">Status Loker:</span>
                             <span
@@ -71,13 +90,23 @@
                             </span>
                         </div>
                         <div>
-                            <span class="text-xs text-gray-400 block mb-1">Status Moderasi:</span>
-                            <span
-                                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold {{ ($lowongan->status_moderasi ?? 'menunggu') === 'disetujui' ? 'bg-blue-50 text-blue-700 border border-blue-200' : (($lowongan->status_moderasi ?? 'menunggu') === 'ditolak' ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-amber-50 text-amber-800 border border-amber-200') }}">
-                                <span
-                                    class="w-2 h-2 rounded-full {{ ($lowongan->status_moderasi ?? 'menunggu') === 'disetujui' ? 'bg-blue-500' : (($lowongan->status_moderasi ?? 'menunggu') === 'ditolak' ? 'bg-red-500' : 'bg-amber-500') }}"></span>
-                                {{ ucfirst($lowongan->status_moderasi ?? 'Menunggu') }}
-                            </span>
+                            <span class="text-xs text-gray-400 block mb-1">Status Moderasi Superadmin:</span>
+                            @if (($lowongan->status_moderasi ?? 'menunggu') === 'menunggu')
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                                    <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                                    Belum di-ACC (Menunggu)
+                                </span>
+                            @elseif (($lowongan->status_moderasi ?? '') === 'ditolak')
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-50 text-red-700 border border-red-200">
+                                    <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                                    Ditolak Superadmin
+                                </span>
+                            @else
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                    Disetujui (Tayang Aktif)
+                                </span>
+                            @endif
                         </div>
                     </div>
 

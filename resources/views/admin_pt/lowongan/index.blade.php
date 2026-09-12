@@ -179,22 +179,31 @@
                                     </td>
 
 
-                                    <!-- Status -->
+                                    <!-- Status Moderasi & Loker -->
                                     <td class="px-6 py-4">
-
-                                        <span
-                                            class="inline-flex items-center gap-1.5
-                                                   rounded-full bg-emerald-50
-                                                   px-3 py-1.5
-                                                   text-xs font-semibold
-                                                   text-emerald-700">
-
-                                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-
-                                            {{ ucfirst($job->status_loker ?? ($job->status ?? 'Aktif')) }}
-
-                                        </span>
-
+                                        @if (($job->status_moderasi ?? 'menunggu') === 'menunggu')
+                                            <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200 px-3 py-1.5 text-xs font-bold text-amber-800 shadow-sm">
+                                                <span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
+                                                Menunggu ACC
+                                            </span>
+                                        @elseif (($job->status_moderasi ?? '') === 'ditolak')
+                                            <span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 border border-red-200 px-3 py-1.5 text-xs font-bold text-red-700 shadow-sm">
+                                                <span class="h-2 w-2 rounded-full bg-red-500"></span>
+                                                Ditolak Superadmin
+                                            </span>
+                                        @else
+                                            @if (($job->status_loker ?? 'aktif') === 'ditutup')
+                                                <span class="inline-flex items-center gap-1.5 rounded-full bg-gray-100 border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600">
+                                                    <span class="h-2 w-2 rounded-full bg-gray-400"></span>
+                                                    Ditutup
+                                                </span>
+                                            @else
+                                                <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1.5 text-xs font-bold text-emerald-700 shadow-sm">
+                                                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                                                    Disetujui (Aktif)
+                                                </span>
+                                            @endif
+                                        @endif
                                     </td>
 
 

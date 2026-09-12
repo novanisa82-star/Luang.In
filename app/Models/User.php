@@ -25,6 +25,16 @@ class User extends Authenticatable
         return $this->hasMany(Application::class);
     }
 
+    public function laporansDiterima()
+    {
+        return $this->hasMany(Laporan::class, 'terlapor_id');
+    }
+
+    public function laporansDiajukan()
+    {
+        return $this->hasMany(Laporan::class, 'pelapor_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -45,6 +55,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_suspended' => 'boolean',
         ];
     }
 }

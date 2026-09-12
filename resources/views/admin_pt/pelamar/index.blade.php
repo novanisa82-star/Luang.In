@@ -64,12 +64,23 @@
                 </div>
 
                 <!-- Kolom Kanan: Status Badges & Filter Kriteria / Pilih Lowongan -->
-                <div class="flex flex-wrap items-center gap-2.5 self-start lg:self-center">
-                    <!-- Badge Lowongan Aktif -->
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-gray-200 text-xs font-bold text-gray-700 shadow-sm">
-                        <span class="material-symbols-outlined text-emerald-600 text-[16px] font-bold">check_circle</span>
-                        <span>{{ ucfirst($selectedLowongan->status_loker ?? 'aktif') === 'Aktif' ? 'Lowongan Aktif' : 'Lowongan Ditutup' }}</span>
-                    </div>
+                    <!-- Badge Status Moderasi ACC Superadmin -->
+                    @if (($selectedLowongan->status_moderasi ?? 'menunggu') === 'menunggu')
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-xs font-bold text-amber-800 shadow-sm">
+                            <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                            <span>Menunggu ACC Superadmin</span>
+                        </div>
+                    @elseif (($selectedLowongan->status_moderasi ?? '') === 'ditolak')
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-50 border border-red-200 text-xs font-bold text-red-700 shadow-sm">
+                            <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                            <span>Ditolak Superadmin</span>
+                        </div>
+                    @else
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-gray-200 text-xs font-bold text-gray-700 shadow-sm">
+                            <span class="material-symbols-outlined text-emerald-600 text-[16px] font-bold">check_circle</span>
+                            <span>{{ ucfirst($selectedLowongan->status_loker ?? 'aktif') === 'Aktif' ? 'Lowongan Aktif' : 'Lowongan Ditutup' }}</span>
+                        </div>
+                    @endif
 
                     <!-- Badge Shift / Durasi -->
                     <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-200 text-xs font-semibold text-gray-600">
