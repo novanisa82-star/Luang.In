@@ -36,6 +36,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Rating yang diterima PT ini dari para pelamar.
+     */
+    public function ratingsReceived()
+    {
+        return $this->hasMany(Rating::class, 'pt_user_id');
+    }
+
+    /**
+     * Rating yang pernah diberikan oleh user ini sebagai pelamar.
+     */
+    public function ratingsDiberikan()
+    {
+        return $this->hasMany(Rating::class, 'reviewer_id');
+    }
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>

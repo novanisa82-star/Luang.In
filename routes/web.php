@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminPt\PelamarController;
 use App\Http\Controllers\Superadmin\DashboardController as SuperadminDashboardController;
 use App\Http\Controllers\Superadmin\LaporanController as SuperadminLaporanController;
 use App\Http\Controllers\Superadmin\KelolaAkunController as SuperadminKelolaAkunController;
+use App\Http\Controllers\User\RatingController;
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
@@ -63,4 +64,10 @@ Route::middleware(['admin.auth'])->group(function () {
         Route::patch('/admin/superadmin/akun/{id}/status-verifikasi', [SuperadminKelolaAkunController::class, 'updateStatusVerifikasi'])->name('superadmin.akun.update_status');
         Route::delete('/admin/superadmin/akun/{id}', [SuperadminKelolaAkunController::class, 'destroy'])->name('superadmin.akun.destroy');
     });
+});
+
+// Rute Rating Pelamar (User yang sudah login dan lamarannya diterima)
+Route::middleware(['auth'])->name('user.')->group(function () {
+    Route::get('/rating/{applicationId}', [RatingController::class, 'show'])->name('rating.show');
+    Route::post('/rating/{applicationId}', [RatingController::class, 'store'])->name('rating.store');
 });

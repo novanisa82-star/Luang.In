@@ -18,6 +18,14 @@ class Application extends Model
         return $this->belongsTo(Pekerjaan::class);
     }
 
+    /**
+     * Rating yang diberikan untuk lamaran ini.
+     */
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
     // Mendapatkan 2 huruf inisial dari nama pelamar (e.g. Budi Prasetyo -> BP)
     public function getInisialAttribute()
     {

@@ -61,6 +61,8 @@
 
         <!-- 3 METRIC CARDS ROW -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <!-- 3+1 METRIC CARDS ROW (termasuk Rating PT) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
             
             <!-- Card 1: Total Pekerja Terpilih -->
             <div class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-sm flex items-center justify-between">
@@ -110,6 +112,26 @@
                 </div>
                 <div class="w-12 h-12 rounded-2xl bg-purple-50 text-[#7c3aed] flex items-center justify-center shrink-0 shadow-inner">
                     <span class="material-symbols-outlined text-[24px]">forum</span>
+                </div>
+            </div>
+
+            <!-- Card 4: Rating PT dari Pelamar -->
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-sm flex items-center justify-between">
+                <div>
+                    <span class="text-xs font-semibold text-gray-500">Rating PT Anda</span>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1 flex items-baseline gap-1">
+                        {{ $ratingRataRata ?? '—' }}
+                        @if($ratingRataRata)
+                            <span class="text-xl text-amber-400">★</span>
+                        @endif
+                    </h3>
+                    <div class="mt-2 text-xs font-medium text-amber-700 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-amber-500 text-[15px]">reviews</span>
+                        <span>{{ $totalRating > 0 ? "Dari {$totalRating} ulasan" : 'Belum ada ulasan' }}</span>
+                    </div>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center shrink-0 shadow-inner">
+                    <span class="material-symbols-outlined text-[24px]">star</span>
                 </div>
             </div>
 
@@ -195,6 +217,34 @@
                         </div>
 
                         <!-- Kolom 4: Badge Status Diterima -->
+                        <!-- Kolom 4: Rating dari Pelamar Ini -->
+                        @php
+                            $ratingItem = $item->ratings->first();
+                        @endphp
+                        <div class="shrink-0 min-w-[110px]">
+                            @if($ratingItem)
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex items-center gap-0.5">
+                                        @for($s = 1; $s <= 5; $s++)
+                                            <span class="text-[16px] {{ $s <= $ratingItem->bintang ? 'text-amber-400' : 'text-gray-200' }}">★</span>
+                                        @endfor
+                                        <span class="text-xs font-bold text-gray-700 ml-1">{{ $ratingItem->bintang }}/5</span>
+                                    </div>
+                                    @if($ratingItem->komentar)
+                                        <p class="text-[11px] text-gray-500 leading-tight line-clamp-2 max-w-[120px]">
+                                            "{{ $ratingItem->komentar }}"
+                                        </p>
+                                    @endif
+                                </div>
+                            @else
+                                <span class="inline-flex items-center gap-1 text-xs text-gray-400 font-medium">
+                                    <span class="material-symbols-outlined text-[14px] text-gray-300">star_border</span>
+                                    Belum dinilai
+                                </span>
+                            @endif
+                        </div>
+
+                        <!-- Kolom 5: Badge Status Diterima -->
                         <div class="shrink-0">
                             <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-xs font-extrabold shadow-sm">
                                 <span class="material-symbols-outlined text-[16px] font-bold">check_circle</span>
