@@ -59,10 +59,8 @@
             </div>
         </div>
 
-        <!-- 3 METRIC CARDS ROW -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <!-- 3+1 METRIC CARDS ROW (termasuk Rating PT) -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+        <!-- 4 METRIC CARDS ROW (termasuk Rating PT) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             
             <!-- Card 1: Total Pekerja Terpilih -->
             <div class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-sm flex items-center justify-between">

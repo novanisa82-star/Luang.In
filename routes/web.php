@@ -5,10 +5,24 @@ use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\AdminPt\DashboardController as AdminPtDashboardController;
 use App\Http\Controllers\AdminPt\LowonganController;
 use App\Http\Controllers\AdminPt\PelamarController;
+use App\Http\Controllers\AdminPt\RatingController as AdminPtRatingController;
 use App\Http\Controllers\Superadmin\DashboardController as SuperadminDashboardController;
 use App\Http\Controllers\Superadmin\LaporanController as SuperadminLaporanController;
 use App\Http\Controllers\Superadmin\KelolaAkunController as SuperadminKelolaAkunController;
 use App\Http\Controllers\User\RatingController;
+
+// Rute Halaman Utama / Landing Page Statis
+Route::get('/', function () {
+    $lowongans = \App\Models\Pekerjaan::where('status_loker', 'aktif')
+        ->where('status_moderasi', 'disetujui')
+        ->latest()
+        ->take(4)
+        ->get();
+    if ($lowongans->isEmpty()) {
+        $lowongans = \App\Models\Pekerjaan::latest()->take(4)->get();
+    }
+    return view('landing', compact('lowongans'));
+})->name('landing');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
@@ -42,6 +56,9 @@ Route::middleware(['admin.auth'])->group(function () {
         Route::get('/admin/pelamar', [PelamarController::class, 'index'])->name('pelamar.index');
         Route::get('/admin/riwayat', [PelamarController::class, 'riwayat'])->name('riwayat.index');
         Route::patch('/admin/pelamar/{id}/status', [PelamarController::class, 'updateStatus'])->name('pelamar.update_status');
+
+        // Rute Ulasan & Rating dari Pelamar
+        Route::get('/admin/rating', [AdminPtRatingController::class, 'index'])->name('rating.index');
     });
 
     // Rute Khusus Superadmin (Verifikasi PT, Moderasi Lowongan, Kelola Laporan & Akun PT)

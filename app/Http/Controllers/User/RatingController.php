@@ -77,36 +77,43 @@ class RatingController extends Controller
     }
 
     /**
-     * Pastikan tabel ratings memiliki semua kolom yang dibutuhkan.
-     * Fallback jika migrasi belum dijalankan.
+     * Pastikan tabel ratings memiliki semua kolom yang dibutuhkan tanpa klausa 'after'.
      */
     private function ensureRatingsTableReady()
     {
         if (!Schema::hasTable('ratings')) {
             Schema::create('ratings', function ($table) {
                 $table->id();
-                $table->unsignedBigInteger('application_id');
-                $table->unsignedBigInteger('pekerjaan_id');
-                $table->unsignedBigInteger('reviewer_id');
-                $table->unsignedBigInteger('pt_user_id');
+                $table->unsignedBigInteger('application_id')->nullable();
+                $table->unsignedBigInteger('pekerjaan_id')->nullable();
+                $table->unsignedBigInteger('reviewer_id')->nullable();
+                $table->unsignedBigInteger('pt_user_id')->nullable();
                 $table->tinyInteger('bintang')->unsigned()->default(5);
                 $table->text('komentar')->nullable();
                 $table->timestamps();
-                $table->unique(['application_id', 'reviewer_id']);
             });
-        } else {
-            // Tambah kolom yang kurang jika tabel ada tapi kosong (kolom belum ada)
-            if (!Schema::hasColumn('ratings', 'application_id')) {
-                Schema::table('ratings', function ($table) {
-                    $table->unsignedBigInteger('application_id')->after('id');
-                    $table->unsignedBigInteger('pekerjaan_id')->after('application_id');
-                    $table->unsignedBigInteger('reviewer_id')->after('pekerjaan_id');
-                    $table->unsignedBigInteger('pt_user_id')->after('reviewer_id');
-                    $table->tinyInteger('bintang')->unsigned()->default(5)->after('pt_user_id');
-                    $table->text('komentar')->nullable()->after('bintang');
-                });
-            }
+            return;
         }
+
+        Schema::table('ratings', function ($table) {
+            if (!Schema::hasColumn('ratings', 'application_id')) {
+                $table->unsignedBigInteger('application_id')->nullable();
+            }
+            if (!Schema::hasColumn('ratings', 'pekerjaan_id')) {
+                $table->unsignedBigInteger('pekerjaan_id')->nullable();
+            }
+            if (!Schema::hasColumn('ratings', 'reviewer_id')) {
+                $table->unsignedBigInteger('reviewer_id')->nullable();
+            }
+            if (!Schema::hasColumn('ratings', 'pt_user_id')) {
+                $table->unsignedBigInteger('pt_user_id')->nullable();
+            }
+            if (!Schema::hasColumn('ratings', 'bintang')) {
+                $table->tinyInteger('bintang')->unsigned()->default(5);
+            }
+            if (!Schema::hasColumn('ratings', 'komentar')) {
+                $table->text('komentar')->nullable();
+            }
+        });
     }
 }
-

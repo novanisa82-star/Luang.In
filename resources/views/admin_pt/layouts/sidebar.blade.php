@@ -43,6 +43,13 @@
                     <span class="material-symbols-outlined text-[22px]">history</span>
                     <span class="text-sm">Riwayat</span>
                 </a>
+
+                <!-- Menu Rating & Ulasan -->
+                <a class="flex items-center gap-3 px-4 py-3 transition-all rounded-xl {{ request()->routeIs('admin_pt.rating*') ? 'bg-[#ede9fe] text-[#6b21a8] font-bold' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium' }}"
+                    href="{{ route('admin_pt.rating.index') }}">
+                    <span class="material-symbols-outlined text-[22px]">star</span>
+                    <span class="text-sm">Rating & Ulasan</span>
+                </a>
             </nav>
         </div>
     </div>

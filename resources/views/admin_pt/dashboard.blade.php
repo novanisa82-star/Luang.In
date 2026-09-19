@@ -85,31 +85,27 @@
                 </div>
             @endif
 
-            <!-- 2. Grid 3 Card Metrik -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <!-- 2. Grid 4 Card Metrik -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div
-                    class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between">
                     <div class="flex items-start justify-between">
                         <div>
-                            <span class="text-sm text-secondary">Lowongan Aktif</span>
+                            <span class="text-sm text-secondary font-medium">Lowongan Aktif</span>
                             <h3 class="text-3xl font-bold text-on-surface mt-2">{{ $lowonganAktifCount ?? 0 }}</h3>
                         </div>
-                        <div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center text-primary">
+                        <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center text-purple-700">
                             <span class="material-symbols-outlined text-[22px]">work</span>
                         </div>
                     </div>
-                    <div class="mt-4 text-xs font-medium text-tertiary flex items-center gap-1">
+                    <div class="mt-4 text-xs font-medium text-purple-700 flex items-center gap-1">
                         <span class="material-symbols-outlined text-[16px]">trending_up</span> Lowongan aktif perusahaan
                     </div>
                 </div>
 
-                <div
-                    class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between">
+                <div class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between">
                     <div class="flex items-start justify-between">
                         <div>
-                            <span class="text-sm text-secondary">Pelamar Masuk</span>
+                            <span class="text-sm text-secondary font-medium">Pelamar Masuk</span>
                             <h3 class="text-3xl font-bold text-on-surface mt-2">{{ $pelamarMasukCount ?? 0 }}</h3>
                         </div>
                         <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700">
@@ -121,11 +117,10 @@
                     </div>
                 </div>
 
-                <div
-                    class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between">
+                <div class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between">
                     <div class="flex items-start justify-between">
                         <div>
-                            <span class="text-sm text-secondary">Kandidat Diterima</span>
+                            <span class="text-sm text-secondary font-medium">Kandidat Diterima</span>
                             <h3 class="text-3xl font-bold text-on-surface mt-2">{{ $kandidatDiterimaCount ?? 0 }}</h3>
                         </div>
                         <div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
@@ -137,12 +132,11 @@
                     </div>
                 </div>
 
-                {{-- Card 4: Rating dari Pelamar --}}
-                <div
-                    class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between">
+                <!-- Card 4: Rating dari Pelamar -->
+                <a href="{{ route('admin_pt.rating.index') }}" class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between hover:border-amber-300 border border-transparent transition">
                     <div class="flex items-start justify-between">
                         <div>
-                            <span class="text-sm text-secondary">Rating PT</span>
+                            <span class="text-sm text-secondary font-medium">Rating PT</span>
                             <h3 class="text-3xl font-bold text-on-surface mt-2">
                                 {{ $ratingRataRata ?? '—' }}
                                 @if($ratingRataRata)
@@ -156,10 +150,9 @@
                     </div>
                     <div class="mt-4 text-xs font-medium text-amber-700 flex items-center gap-1">
                         <span class="material-symbols-outlined text-[16px]">reviews</span>
-                        {{ $totalRating > 0 ? "Dari {$totalRating} ulasan pelamar" : 'Belum ada ulasan' }}
+                        {{ isset($totalRating) && $totalRating > 0 ? "Dari {$totalRating} ulasan pelamar" : 'Belum ada ulasan' }}
                     </div>
-                </div>
-
+                </a>
             </div>
 
             <!-- 3. Chart.js Section -->
@@ -167,12 +160,10 @@
                 <div class="flex items-center justify-between mb-4">
                     <div>
                         <h2 class="text-lg font-bold text-on-surface">Statistik Pelamar Masuk Harian</h2>
-                        <p class="text-xs text-secondary">Grafik aktivitas pelamar pada lowongan perusahaan Anda (7 hari
-                            terakhir)</p>
+                        <p class="text-xs text-secondary">Grafik aktivitas pelamar pada lowongan perusahaan Anda (7 hari terakhir)</p>
                     </div>
-                    <span
-                        class="px-2.5 py-1 bg-surface-container rounded-lg text-xs font-medium text-secondary flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Realtime
+                    <span class="px-2.5 py-1 bg-surface-container rounded-lg text-xs font-medium text-secondary flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Realtime DB
                     </span>
                 </div>
                 <div class="w-full h-64 relative">
@@ -189,7 +180,7 @@
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-surface-container">
                         <thead>
-                            <tr class="text-left text-xs font-semibold text-secondary uppercase">
+                            <tr class="text-left text-xs font-semibold text-secondary uppercase tracking-wider">
                                 <th class="pb-3">Judul Loker</th>
                                 <th class="pb-3">Upah / Durasi</th>
                                 <th class="pb-3">Status</th>
@@ -220,8 +211,7 @@
                                 <tr>
                                     <td colspan="4" class="py-8 text-center text-secondary">
                                         <div class="flex flex-col items-center justify-center gap-1">
-                                            <span
-                                                class="material-symbols-outlined text-[32px] text-secondary/60">work_off</span>
+                                            <span class="material-symbols-outlined text-[32px] text-secondary/60">work_off</span>
                                             <span>Belum ada lowongan yang ditambahkan.</span>
                                         </div>
                                     </td>
@@ -242,23 +232,18 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const ctx = document.getElementById('trenTenagaKerjaChart').getContext('2d');
+            const labels = {!! json_encode($chartLabels ?? ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']) !!};
+            const data = {!! json_encode($chartData ?? [0, 0, 0, 0, 0, 0, 0]) !!};
 
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
+                    labels: labels,
                     datasets: [{
-                        label: 'Jumlah Pelamar',
-                        data: [4, 7, 5, 9, 12, 18, 6],
-                        backgroundColor: [
-                            'rgba(240, 237, 240, 0.8)',
-                            'rgba(240, 237, 240, 0.8)',
-                            'rgba(240, 237, 240, 0.8)',
-                            'rgba(240, 237, 240, 0.8)',
-                            'rgba(240, 237, 240, 0.8)',
-                            '#7c3aed',
-                            'rgba(240, 237, 240, 0.8)'
-                        ],
+                        label: 'Jumlah Pelamar Masuk',
+                        data: data,
+                        backgroundColor: '#7c3aed',
+                        hoverBackgroundColor: '#630ed4',
                         borderRadius: 6,
                         borderSkipped: false,
                     }]
@@ -273,10 +258,12 @@
                         tooltip: {
                             backgroundColor: '#1b1b1c',
                             titleFont: {
-                                size: 12
+                                size: 12,
+                                family: 'Plus Jakarta Sans'
                             },
                             bodyFont: {
-                                size: 12
+                                size: 12,
+                                family: 'Plus Jakarta Sans'
                             },
                             padding: 10,
                             cornerRadius: 8
@@ -306,7 +293,7 @@
                                     family: 'Plus Jakarta Sans',
                                     size: 12
                                 },
-                                stepSize: 5
+                                precision: 0
                             }
                         }
                     }

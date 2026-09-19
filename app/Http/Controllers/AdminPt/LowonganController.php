@@ -12,7 +12,7 @@ class LowonganController extends Controller
     public function index()
     {
         // Mengambil data lowongan berdasarkan perusahaan yang sedang login
-        $lowongans = Pekerjaan::where('user_id', Auth::id())->latest()->paginate(10);
+        $lowongans = Pekerjaan::where('user_id', Auth::id())->with('ratings')->latest()->paginate(10);
         
         return view('admin_pt.lowongan.index', compact('lowongans'));
     }
@@ -71,7 +71,7 @@ class LowonganController extends Controller
 
     public function show($id)
     {
-        $lowongan = Pekerjaan::where('user_id', Auth::id())->with('applications.user')->findOrFail($id);
+        $lowongan = Pekerjaan::where('user_id', Auth::id())->with(['applications.user', 'ratings.reviewer'])->findOrFail($id);
         return view('admin_pt.lowongan.show', compact('lowongan'));
     }
 

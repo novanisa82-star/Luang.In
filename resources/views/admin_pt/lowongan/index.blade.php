@@ -102,6 +102,10 @@
                                 </th>
 
                                 <th class="px-6 py-4">
+                                    Rating Loker
+                                </th>
+
+                                <th class="px-6 py-4">
                                     Durasi
                                 </th>
 
@@ -162,6 +166,21 @@
                                         <span class="font-semibold text-on-surface">
                                             Rp {{ number_format((float) $job->upah, 0, ',', '.') }}
                                         </span>
+                                    </td>
+
+                                    <!-- Rating Loker -->
+                                    <td class="px-6 py-4">
+                                        @if($job->rating_rata_rata)
+                                            <a href="{{ route('admin_pt.rating.index', ['pekerjaan_id' => $job->id]) }}"
+                                               title="Lihat ulasan lowongan ini"
+                                               class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold hover:bg-amber-100 transition shadow-sm">
+                                                <span>{{ number_format($job->rating_rata_rata, 1) }}</span>
+                                                <span class="text-amber-500">★</span>
+                                                <span class="text-[10px] text-amber-700 font-normal">({{ $job->total_rating_count }})</span>
+                                            </a>
+                                        @else
+                                            <span class="text-xs text-gray-400 font-medium">Belum ada rating</span>
+                                        @endif
                                     </td>
 
 
@@ -268,7 +287,7 @@
 
                                 <!-- Empty State -->
                                 <tr>
-                                    <td colspan="5" class="px-6 py-16">
+                                    <td colspan="6" class="px-6 py-16">
 
                                         <div class="flex flex-col items-center justify-center text-center">
 

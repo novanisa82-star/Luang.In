@@ -12,6 +12,10 @@
     <!-- Leaflet Map CSS & JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+    <!-- AOS (Animate On Scroll) Library CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script id="tailwind-config">
         tailwind.config = {
@@ -40,6 +44,15 @@
             }
         };
     </script>
+    <style>
+        .card-hover-effect {
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -6px rgba(99, 14, 212, 0.08), 0 4px 8px -4px rgba(0, 0, 0, 0.04);
+        }
+    </style>
 </head>
 
 <body class="bg-[#fcf9f8] font-body text-gray-800 antialiased min-h-screen">
@@ -51,11 +64,24 @@
         <!-- Memanggil Header -->
         @include('admin_pt.layouts.header')
 
-        <!-- Tempat Konten Berubah-ubah -->
-        <main class="w-full pt-16 bg-[#fcf9f8] min-h-[calc(100vh-64px)]">
+        <!-- Tempat Konten Berubah-ubah dengan AOS Animation -->
+        <main class="w-full pt-16 bg-[#fcf9f8] min-h-[calc(100vh-64px)]" data-aos="fade-up" data-aos-duration="600">
             @yield('content')
         </main>
     </div>
+
+    <!-- AOS (Animate On Scroll) JS CDN & Initialization -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            AOS.init({
+                duration: 700,
+                easing: 'ease-out-cubic',
+                once: true,
+                offset: 30
+            });
+        });
+    </script>
 
     @stack('scripts')
 </body>

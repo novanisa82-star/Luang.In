@@ -7,6 +7,8 @@
     <title>Dashboard Superadmin - Luang.In</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <!-- AOS (Animate On Scroll) Library CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -19,12 +21,28 @@
             }
         }
     </script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
 </head>
 
 <body class="bg-[#fcf9f8] font-sans antialiased text-gray-800 min-h-screen">
     
     <!-- Top Navbar Superadmin -->
     <header class="bg-white border-b border-gray-200/80 sticky top-0 z-50">
+    <header class="bg-white border-b border-gray-200/80 sticky top-0 z-50" data-aos="fade-down">
         <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-[#6b21a8] text-white flex items-center justify-center shadow-sm">
@@ -39,22 +57,22 @@
             <!-- Navigation Links 3 Pilar -->
             <div class="flex items-center gap-2">
                 <a href="{{ route('admin_pt.dashboard') }}"
-                   class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold bg-[#ede9fe] text-[#6b21a8] transition">
+                   class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold bg-[#ede9fe] text-[#6b21a8] hover:bg-purple-200 hover:-translate-y-0.5 transition-all duration-300 shadow-sm">
                     <span class="material-symbols-outlined text-[18px]">verified_user</span>
                     <span>Panel Moderasi</span>
                 </a>
                 <a href="{{ route('superadmin.laporan.index') }}"
-                   class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition">
+                   class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-gray-600 hover:text-gray-900 hover:bg-gray-100 hover:-translate-y-0.5 transition-all duration-300">
                     <span class="material-symbols-outlined text-[18px]">report</span>
                     <span>Kelola Laporan</span>
                     @if(isset($laporanPendingCount) && $laporanPendingCount > 0)
-                        <span class="px-2 py-0.5 text-[10px] rounded-full bg-red-500 text-white font-black">
+                        <span class="px-2 py-0.5 text-[10px] rounded-full bg-red-500 text-white font-black animate-pulse">
                             {{ $laporanPendingCount }}
                         </span>
                     @endif
                 </a>
                 <a href="{{ route('superadmin.akun.index') }}"
-                   class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition">
+                   class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-gray-600 hover:text-gray-900 hover:bg-gray-100 hover:-translate-y-0.5 transition-all duration-300">
                     <span class="material-symbols-outlined text-[18px]">manage_accounts</span>
                     <span>Kelola Akun PT</span>
                     @if(isset($totalPTBermasalahCount) && $totalPTBermasalahCount > 0)
@@ -67,15 +85,15 @@
 
             <div class="flex items-center gap-4">
                 <div class="hidden sm:flex items-center gap-2 text-xs font-semibold text-gray-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                    <span>Superadmin Aktif: {{ auth()->user()->name ?? 'Superadmin' }}</span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>Superadmin: {{ auth()->user()->name ?? 'Superadmin' }}</span>
                 </div>
 
                 <form action="{{ route('logout') }}" method="POST" class="m-0">
                     @csrf
                     <button type="submit"
-                            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-red-50 text-red-700 hover:bg-red-100 border border-red-200 text-xs font-bold transition">
-                        <span class="material-symbols-outlined text-[16px]">logout</span>
+                            class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-red-50 text-red-700 hover:bg-red-600 hover:text-white border border-red-200 text-xs font-bold transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 group">
+                        <span class="material-symbols-outlined text-[16px] group-hover:rotate-12 transition-transform">logout</span>
                         <span>Keluar</span>
                     </button>
                 </form>
@@ -83,11 +101,13 @@
         </div>
     </header>
 
+    <main class="max-w-7xl mx-auto px-6 py-8 space-y-8 animate-fade-in-up">
     <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
 
         <!-- Flash Message -->
         @if(session('success'))
             <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-2.5 shadow-sm">
+            <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-2.5 shadow-sm" data-aos="fade-down">
                 <span class="material-symbols-outlined text-[22px] text-emerald-600 shrink-0">check_circle</span>
                 <span>{{ session('success') }}</span>
             </div>
@@ -95,6 +115,7 @@
 
         @if(session('error'))
             <div class="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-sm font-semibold flex items-center gap-2.5 shadow-sm">
+            <div class="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-sm font-semibold flex items-center gap-2.5 shadow-sm" data-aos="fade-down">
                 <span class="material-symbols-outlined text-[22px] text-red-600 shrink-0">error</span>
                 <span>{{ session('error') }}</span>
             </div>
@@ -103,6 +124,7 @@
         <!-- Summary Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div class="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm flex items-center justify-between">
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm flex items-center justify-between" data-aos="fade-up" data-aos-delay="100">
                 <div>
                     <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Mitra PT Menunggu ACC</span>
                     <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ $pendingPT->count() }} Pengajuan</h3>
@@ -114,6 +136,7 @@
             </div>
 
             <div class="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm flex items-center justify-between">
+            <div class="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm flex items-center justify-between" data-aos="fade-up" data-aos-delay="200">
                 <div>
                     <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Lowongan Menunggu Moderasi</span>
                     <h3 class="text-3xl font-extrabold text-gray-900 mt-1">{{ $pendingPekerjaan->count() }} Lowongan</h3>
@@ -126,6 +149,7 @@
 
             <a href="{{ route('superadmin.laporan.index') }}"
                class="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm flex items-center justify-between hover:border-purple-300 hover:shadow-md transition group">
+               class="bg-white rounded-2xl border border-gray-200/80 p-6 shadow-sm flex items-center justify-between hover:border-purple-300 hover:shadow-md transition group" data-aos="fade-up" data-aos-delay="300">
                 <div>
                     <div class="flex items-center gap-1.5">
                         <span class="text-xs font-bold text-red-500 uppercase tracking-wider">Pengaduan Masalah</span>
@@ -147,6 +171,7 @@
 
         <!-- 1. TABEL VERIFIKASI AKUN PT -->
         <div class="bg-white rounded-2xl border border-gray-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.02)] overflow-hidden">
+        <div class="bg-white rounded-2xl border border-gray-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.02)] overflow-hidden" data-aos="fade-up" data-aos-delay="400">
             <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
                 <div>
                     <h2 class="text-base font-extrabold text-gray-900">Daftar Akun Mitra PT Menunggu Persetujuan (ACC)</h2>
@@ -238,6 +263,7 @@
 
         <!-- 2. TABEL MODERASI LOWONGAN PEKERJAAN -->
         <div class="bg-white rounded-2xl border border-gray-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.02)] overflow-hidden">
+        <div class="bg-white rounded-2xl border border-gray-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.02)] overflow-hidden" data-aos="fade-up" data-aos-delay="500">
             <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
                 <div>
                     <h2 class="text-base font-extrabold text-gray-900">Moderasi Lowongan Pekerjaan Baru</h2>
@@ -317,6 +343,18 @@
 
     </main>
 
+    <!-- AOS (Animate On Scroll) JS CDN & Initialization -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            AOS.init({
+                duration: 700,
+                easing: 'ease-out-cubic',
+                once: true,
+                offset: 30
+            });
+        });
+    </script>
 </body>
 
 </html>

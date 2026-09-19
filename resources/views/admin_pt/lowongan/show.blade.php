@@ -111,7 +111,7 @@
                     </div>
 
                     <!-- Key Metrics Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div class="p-4 rounded-xl bg-[#f8f9fa] border border-gray-200/80 flex items-center gap-3">
                             <div
                                 class="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
@@ -131,6 +131,24 @@
                             <div>
                                 <span class="text-xs text-gray-400 font-medium block">Durasi Kerja</span>
                                 <span class="text-sm font-bold text-gray-900">{{ $lowongan->durasi }}</span>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-[#f8f9fa] border border-gray-200/80 flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                                <span class="material-symbols-outlined text-[22px]">star</span>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-400 font-medium block">Rating Lowongan</span>
+                                <span class="text-sm font-bold text-gray-900 flex items-center gap-1">
+                                    @if($lowongan->rating_rata_rata)
+                                        <span>{{ number_format($lowongan->rating_rata_rata, 1) }}</span>
+                                        <span class="text-amber-500">★</span>
+                                        <span class="text-[11px] text-gray-400 font-normal">({{ $lowongan->total_rating_count }} ulasan)</span>
+                                    @else
+                                        <span class="text-gray-400 text-xs font-normal">Belum ada rating</span>
+                                    @endif
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -244,6 +262,53 @@
                                 @endforelse
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <!-- Card Ulasan & Rating Pelamar Lowongan Ini -->
+                <div class="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-gray-100 p-6 sm:p-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-base font-bold text-gray-900">Ulasan & Rating Lowongan Ini</h3>
+                            <p class="text-xs text-gray-500 mt-0.5">Penilaian dan komentar dari pelamar yang telah diterima pada posisi ini.</p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200/70 text-xs font-bold">
+                            {{ $lowongan->ratings ? $lowongan->ratings->count() : 0 }} Ulasan
+                        </span>
+                    </div>
+
+                    <div class="divide-y divide-gray-100">
+                        @forelse($lowongan->ratings ?? [] as $rev)
+                            <div class="py-4 space-y-1.5">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 font-bold text-xs flex items-center justify-center shrink-0">
+                                            {{ strtoupper(substr($rev->reviewer->name ?? 'P', 0, 2)) }}
+                                        </div>
+                                        <span class="font-bold text-gray-800 text-xs sm:text-sm">{{ $rev->reviewer->name ?? 'Pelamar Lapangan' }}</span>
+                                    </div>
+                                    <div class="flex items-center text-amber-400 text-xs">
+                                        @for($s = 1; $s <= 5; $s++)
+                                            <span class="{{ $s <= $rev->bintang ? 'text-amber-400' : 'text-gray-200' }}">★</span>
+                                        @endfor
+                                        <span class="text-xs font-bold text-gray-700 ml-1">{{ $rev->bintang }}/5</span>
+                                    </div>
+                                </div>
+                                @if($rev->komentar)
+                                    <p class="text-xs text-gray-600 bg-gray-50 p-3 rounded-xl italic leading-relaxed">
+                                        "{{ $rev->komentar }}"
+                                    </p>
+                                @endif
+                                <span class="text-[10px] text-gray-400 block text-right">
+                                    {{ $rev->created_at ? $rev->created_at->translatedFormat('d M Y, H:i') : '-' }} WIB
+                                </span>
+                            </div>
+                        @empty
+                            <div class="py-8 text-center text-gray-400">
+                                <span class="material-symbols-outlined text-[32px] text-gray-300">rate_review</span>
+                                <p class="text-xs font-medium mt-1">Belum ada ulasan untuk lowongan ini.</p>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
 

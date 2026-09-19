@@ -9,6 +9,7 @@ use App\Models\Pekerjaan;
 use App\Models\Application;
 use App\Models\Laporan;
 use App\Models\Rating;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -34,11 +35,14 @@ class DashboardController extends Controller
         // Rating rata-rata yang diterima PT ini dari pelamar
         $ratingRataRata = null;
         $totalRating = 0;
-        if (\Illuminate\Support\Facades\Schema::hasTable('ratings') &&
-            \Illuminate\Support\Facades\Schema::hasColumn('ratings', 'pt_user_id')) {
-            $totalRating = Rating::where('pt_user_id', $user->id)->count();
+        if (\Illuminate\Support\Facades\Schema::hasTable('ratings')) {
+            $totalRating = Rating::whereHas('pekerjaan', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->count();
             $ratingRataRata = $totalRating > 0
-                ? round(Rating::where('pt_user_id', $user->id)->avg('bintang'), 1)
+                ? round(Rating::whereHas('pekerjaan', function ($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                })->avg('bintang'), 1)
                 : null;
         }
 
@@ -57,6 +61,18 @@ class DashboardController extends Controller
             ->get();
         }
 
+        // Data Grafik Aktivitas Pelamar Harian (7 Hari Terakhir) dari Database
+        $chartLabels = [];
+        $chartData = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = Carbon::now()->subDays($i);
+            $chartLabels[] = $date->locale('id')->isoFormat('ddd (D/M)');
+            $count = Application::whereHas('pekerjaan', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->whereDate('created_at', $date->toDateString())->count();
+            $chartData[] = $count;
+        }
+
         return view('admin_pt.dashboard', compact(
             'lowonganAktifCount',
             'pelamarMasukCount',
@@ -64,8 +80,9 @@ class DashboardController extends Controller
             'recentPekerjaan',
             'ratingRataRata',
             'totalRating',
-            'activeWarnings'
+            'activeWarnings',
+            'chartLabels',
+            'chartData'
         ));
     }
 }
-
