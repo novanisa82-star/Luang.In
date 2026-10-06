@@ -26,17 +26,13 @@
 </head>
 
 <body class="bg-[#fcf9f8] font-sans antialiased text-gray-800 min-h-screen flex items-center justify-center p-4 sm:p-6">
-    <div class="w-full max-w-md bg-white rounded-3xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-gray-100 p-8 sm:p-10 my-8">
     <div class="w-full max-w-md bg-white rounded-3xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-gray-100 p-8 sm:p-10 my-8"
          data-aos="zoom-in-up" data-aos-duration="700">
         
         <!-- Logo & Header -->
-        <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#6b21a8] text-white shadow-md mb-4">
         <div class="text-center mb-8" data-aos="fade-up" data-aos-delay="100">
             <a href="/" class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#6b21a8] text-white shadow-md mb-4 hover:scale-105 transition-transform">
                 <span class="material-symbols-outlined text-[28px]">deployed_code</span>
-            </div>
             </a>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
                 Portal Admin & PT
@@ -48,7 +44,6 @@
 
         <!-- Notifikasi Sukses Pendaftaran -->
         @if(session('success'))
-            <div class="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm shadow-sm flex items-start gap-2.5">
             <div class="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm shadow-sm flex items-start gap-2.5" data-aos="fade-up">
                 <span class="material-symbols-outlined text-[20px] text-emerald-600 shrink-0 mt-0.5">check_circle</span>
                 <span class="leading-relaxed font-semibold">{{ session('success') }}</span>
@@ -57,7 +52,6 @@
 
         <!-- Notifikasi Error Login / Menunggu ACC -->
         @if($errors->any())
-            <div class="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm shadow-sm flex items-start gap-2.5">
             <div class="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm shadow-sm flex items-start gap-2.5" data-aos="fade-up">
                 <span class="material-symbols-outlined text-[20px] text-amber-600 shrink-0 mt-0.5">warning</span>
                 <span class="leading-relaxed font-semibold">{{ $errors->first() }}</span>
@@ -65,7 +59,6 @@
         @endif
 
         <!-- Form Login -->
-        <form action="{{ route('login.process') }}" method="POST" class="space-y-5">
         <form action="{{ route('login.process') }}" method="POST" class="space-y-5" data-aos="fade-up" data-aos-delay="200">
             @csrf
 
@@ -110,18 +103,14 @@
 
             <!-- Tombol Masuk -->
             <button type="submit"
-                    class="w-full mt-2 py-3.5 px-4 rounded-xl bg-[#6b21a8] hover:bg-[#581c87] text-white font-bold text-sm shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined text-[20px]">login</span>
                     class="w-full mt-2 py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#6b21a8] to-[#7c3aed] hover:from-[#581c87] hover:to-[#6b21a8] text-white font-bold text-sm shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 group">
                 <span class="material-symbols-outlined text-[20px] group-hover:scale-110 transition-transform">login</span>
                 <span>Masuk Dashboard</span>
             </button>
         </form>
 
-        <!-- Footer / Tautan Daftar PT -->
-        <div class="mt-8 pt-6 border-t border-gray-100 text-center">
         <!-- Footer / Tautan Daftar PT & Landing Page -->
-        <div class="mt-8 pt-6 border-t border-gray-100 text-center space-y-2" data-aos="fade-up" data-aos-delay="300">
+        <div class="mt-8 pt-6 border-t border-gray-100 text-center space-y-3" data-aos="fade-up" data-aos-delay="300">
             <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">
                 Ingin merekrut pekerja serabutan? <br>
                 <a href="{{ route('register.pt') }}" class="font-bold text-[#6b21a8] hover:underline inline-flex items-center gap-1 mt-1">
@@ -130,7 +119,7 @@
                 </a>
             </p>
             <div>
-                <a href="/" class="text-xs text-gray-400 hover:text-gray-700 font-semibold inline-flex items-center gap-1">
+                <a href="/" class="text-xs text-gray-400 hover:text-gray-700 font-semibold inline-flex items-center gap-1 transition-colors">
                     <span class="material-symbols-outlined text-[14px]">home</span>
                     <span>Kembali ke Beranda Utama</span>
                 </a>
