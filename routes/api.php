@@ -1,7 +1,9 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\MobileAuthController;
+use App\Http\Controllers\Api\SkillProfileController;
 
 Route::get('/test', function () {
     return response()->json([
@@ -10,11 +12,30 @@ Route::get('/test', function () {
 });
 
 Route::prefix('mobile')->group(function () {
-    Route::post('/register', [MobileAuthController::class, 'register']);
+    Route::post(
+        '/register',
+        [MobileAuthController::class, 'register']
+    );
+
+    Route::post(
+        '/complete-registration',
+        [MobileAuthController::class, 'completeRegistration']
+    );
+
     Route::post('/login', [MobileAuthController::class, 'login']);
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/me', [MobileAuthController::class, 'me']);
         Route::post('/logout', [MobileAuthController::class, 'logout']);
+
+        Route::get(
+            '/skill-profile',
+            [SkillProfileController::class, 'show']
+        );
+
+        Route::post(
+            '/skill-profile',
+            [SkillProfileController::class, 'store']
+        );
     });
 });
