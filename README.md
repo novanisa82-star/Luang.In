@@ -1,59 +1,140 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 💼 Luang.In — Backend API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Luang.In** adalah platform pencarian lowongan kerja yang dikembangkan untuk menghubungkan pelamar dengan perusahaan. Repository ini berisi backend berbasis Laravel yang menangani pengelolaan data, autentikasi, dan komunikasi API dengan aplikasi mobile.
 
-## About Laravel
+## ✨ Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Autentikasi API** — Registrasi dan login pengguna menggunakan Laravel Sanctum.
+- **Manajemen Pengguna** — Pengelolaan data akun dan informasi pengguna.
+- **Profil Keterampilan** — Penyimpanan informasi keterampilan, pengalaman, dan data pendukung pelamar.
+- **API Lowongan Kerja** — Mendukung pengelolaan dan penyediaan data lowongan.
+- **Pengelolaan Lamaran** — Mendukung proses pengajuan dan pemantauan lamaran pekerjaan.
+- **Manajemen Perusahaan** — Mendukung pengelolaan akun dan proses verifikasi perusahaan.
+- **Kontrol Akses** — Mendukung pembatasan akses berdasarkan peran pengguna.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+*Catatan: Fitur yang tersedia bergantung pada implementasi endpoint dan integrasi yang telah diselesaikan.*
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠️ Teknologi
 
-## Learning Laravel
+| Teknologi | Kegunaan |
+|---|---|
+| Laravel | Framework backend |
+| PHP | Bahasa pemrograman |
+| MySQL | Database |
+| Laravel Sanctum | Autentikasi API berbasis token |
+| Composer | Manajemen dependensi PHP |
+| Git & GitHub | Version control |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 📋 Persyaratan
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Pastikan perangkat pengembangan telah memiliki:
 
-## Laravel Sponsors
+- PHP sesuai versi yang didukung proyek Laravel
+- Composer
+- MySQL atau MariaDB
+- Git
+- XAMPP atau lingkungan server lokal lainnya
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🚀 Instalasi
 
-### Premium Partners
+### 1. Clone Repository
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+git clone <URL_REPOSITORY_LARAVEL>
+```
 
-## Contributing
+Masuk ke direktori proyek:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+cd <NAMA_FOLDER_LARAVEL>
+```
 
-## Code of Conduct
+### 2. Instal Dependensi
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+composer install
+```
 
-## Security Vulnerabilities
+### 3. Konfigurasi Environment
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Salin file konfigurasi:
 
-## License
+```bash
+copy .env.example .env
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Generate application key:
+
+```bash
+php artisan key:generate
+```
+
+### 4. Konfigurasi Database
+
+Buat database bernama `luangin_db`, lalu sesuaikan konfigurasi pada file `.env`.
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=luangin_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Sesuaikan username dan password dengan konfigurasi database lokal.
+
+### 5. Jalankan Migrasi
+
+```bash
+php artisan migrate
+```
+
+Pastikan seluruh migrasi berjalan dengan sukses sebelum melanjutkan.
+
+### 6. Jalankan Server API
+
+```bash
+php artisan serve --host=0.0.0.0 --port=8000
+```
+
+Server Laravel akan berjalan pada port `8000`.
+
+## 🔌 Integrasi API
+
+Backend ini dirancang untuk diintegrasikan dengan aplikasi mobile Luang.In melalui REST API.
+
+Endpoint autentikasi mobile yang digunakan meliputi:
+
+| Method | Endpoint | Kegunaan |
+|---|---|---|
+| POST | `/api/mobile/register` | Registrasi pengguna, jika menggunakan alur registrasi langsung |
+| POST | `/api/mobile/login` | Login pengguna |
+| GET | `/api/mobile/me` | Mengambil data pengguna yang sedang login |
+| POST | `/api/mobile/logout` | Logout pengguna |
+| GET | `/api/mobile/skill-profile` | Mengambil profil keterampilan |
+| POST | `/api/mobile/skill-profile` | Menyimpan atau memperbarui profil keterampilan |
+
+Endpoint yang memerlukan autentikasi menggunakan token Sanctum.
+
+> **Penting:** Sesuaikan daftar endpoint dengan `routes/api.php` terbaru. Jika registrasi menggunakan alur pengisian profil terlebih dahulu, dokumentasikan endpoint `complete-registration` yang benar-benar sudah dibuat.
+
+## 🔐 Keamanan
+
+- Simpan kredensial database di file `.env`.
+- Jangan unggah file `.env` ke repository publik.
+- Gunakan validasi input pada setiap endpoint.
+- Terapkan autentikasi dan otorisasi sesuai kebutuhan.
+- Gunakan HTTPS saat deployment ke server produksi.
+
+## 🎯 Tujuan
+
+Backend Luang.In dikembangkan untuk menyediakan layanan API yang menghubungkan aplikasi mobile dengan database, sekaligus mendukung pengelolaan akun, profil pelamar, lowongan pekerjaan, dan proses perekrutan.
+
+## 📌 Status Proyek
+
+**Luang.In Backend API** — dikembangkan menggunakan Laravel dan diintegrasikan secara bertahap dengan aplikasi mobile.
+
+---
+
+**Luang.In — Temukan Peluang, Bangun Masa Depan.** 💜
