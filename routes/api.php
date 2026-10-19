@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\MobileAuthController;
 use App\Http\Controllers\Api\SkillProfileController;
+use App\Http\Controllers\Api\PekerjaanController;
 
 Route::get('/test', function () {
     return response()->json([
@@ -38,4 +39,5 @@ Route::prefix('mobile')->group(function () {
             [SkillProfileController::class, 'store']
         );
     });
+    Route::get('/pekerjaan', [PekerjaanController::class, 'index']);
 });

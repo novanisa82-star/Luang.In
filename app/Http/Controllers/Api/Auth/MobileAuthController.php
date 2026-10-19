@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
@@ -82,6 +83,7 @@ class MobileAuthController extends Controller
         ], 201);
     }
 
+
     public function login(Request $request)
     {
         $data = $request->validate([
@@ -95,24 +97,30 @@ class MobileAuthController extends Controller
 
         $user = User::where('email', $data['email'])->first();
 
-        if (
-            !$user ||
-            !Hash::check($data['password'], $user->password) ||
-            $user->role !== 'user'
-        ) {
-            throw ValidationException::withMessages([
-                'email' => ['Email atau password salah.'],
-            ]);
+        if (!$user || !Hash::check($data['password'], $user->password)) {
+            return response()->json([
+                'message' => 'Email atau password salah.',
+                'errors' => [
+                    'email' => ['Email atau password salah.'],
+                ],
+            ], 422);
+        }
+
+        if ($user->role !== 'user') {
+            return response()->json([
+                'message' => 'Akun ini tidak memiliki akses login pelamar.',
+            ], 403);
         }
 
         $token = $user->createToken('luangin-mobile')->plainTextToken;
 
         return response()->json([
-            'message' => 'Login berhasil',
+            'message' => 'Login berhasil.',
             'user' => $user,
             'token' => $token,
         ]);
     }
+
 
     public function me(Request $request)
     {
