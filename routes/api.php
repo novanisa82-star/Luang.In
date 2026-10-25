@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\MobileAuthController;
 use App\Http\Controllers\Api\SkillProfileController;
 use App\Http\Controllers\Api\PekerjaanController;
+use App\Http\Controllers\Api\LamaranController;
 
 Route::get('/test', function () {
     return response()->json([
@@ -37,6 +38,8 @@ Route::prefix('mobile')->group(function () {
         Route::post(
             '/skill-profile',
             [SkillProfileController::class, 'store']
+        );
+        Route::get('/riwayat-lamaran', [LamaranController::class, 'index']
         );
     });
     Route::get('/pekerjaan', [PekerjaanController::class, 'index']);
