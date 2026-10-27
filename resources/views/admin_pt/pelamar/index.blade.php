@@ -219,20 +219,13 @@
                                             {{ $pelamar->user->name ?? 'Kandidat Pekerja' }}
                                         </span>
 
-                                        <!-- Tag Kualifikasi / Rating -->
-                                        @if ($kualifikasi['type'] === 'rating')
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-700 text-[11px] font-semibold">
-                                                <span class="material-symbols-outlined text-[14px] text-amber-500 fill-1">star</span>
-                                                {{ $kualifikasi['label'] }}
-                                            </span>
-                                        @else
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-700 text-[11px] font-semibold">
-                                                @if(isset($kualifikasi['icon']))
-                                                    <span class="material-symbols-outlined text-[14px] text-gray-500">{{ $kualifikasi['icon'] }}</span>
-                                                @endif
-                                                {{ $kualifikasi['label'] }}
-                                            </span>
-                                        @endif
+                                        <!-- Tag Kualifikasi -->
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-700 text-[11px] font-semibold">
+                                            @if(isset($kualifikasi['icon']))
+                                                <span class="material-symbols-outlined text-[14px] text-gray-500">{{ $kualifikasi['icon'] }}</span>
+                                            @endif
+                                            {{ $kualifikasi['label'] }}
+                                        </span>
                                     </div>
 
                                     <!-- Ringkasan Pengalaman & Radius Jarak -->

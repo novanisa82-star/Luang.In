@@ -85,8 +85,8 @@
                 </div>
             @endif
 
-            <!-- 2. Grid 4 Card Metrik -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- 2. Grid 3 Card Metrik -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between">
                     <div class="flex items-start justify-between">
                         <div>
@@ -131,28 +131,6 @@
                         <span class="material-symbols-outlined text-[16px]">verified</span> Kandidat siap dipekerjakan
                     </div>
                 </div>
-
-                <!-- Card 4: Rating dari Pelamar -->
-                <a href="{{ route('admin_pt.rating.index') }}" class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] flex flex-col justify-between hover:border-amber-300 border border-transparent transition">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-sm text-secondary font-medium">Rating PT</span>
-                            <h3 class="text-3xl font-bold text-on-surface mt-2">
-                                {{ $ratingRataRata ?? '—' }}
-                                @if($ratingRataRata)
-                                    <span class="text-lg text-amber-500">★</span>
-                                @endif
-                            </h3>
-                        </div>
-                        <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-500">
-                            <span class="material-symbols-outlined text-[22px]">star</span>
-                        </div>
-                    </div>
-                    <div class="mt-4 text-xs font-medium text-amber-700 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-[16px]">reviews</span>
-                        {{ isset($totalRating) && $totalRating > 0 ? "Dari {$totalRating} ulasan pelamar" : 'Belum ada ulasan' }}
-                    </div>
-                </a>
             </div>
 
             <!-- 3. Chart.js Section -->

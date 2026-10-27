@@ -10,10 +10,7 @@ class PekerjaanController extends Controller
 {
     public function index(): JsonResponse
     {
-        $pekerjaans = Pekerjaan::with([
-            'user',
-            'ratings',
-        ])
+        $pekerjaans = Pekerjaan::with('user')
             ->where('status_moderasi', 'disetujui')
             ->where('status_loker', 'aktif')
             ->latest()
@@ -33,8 +30,8 @@ class PekerjaanController extends Controller
                     'created_at' => $pekerjaan->created_at,
                     'updated_at' => $pekerjaan->updated_at,
                     'nama_pt' => $pekerjaan->user?->name,
-                    'rating' => $pekerjaan->rating_rata_rata,
-                    'total_rating' => $pekerjaan->total_rating_count,
+                    'rating' => null,
+                    'total_rating' => 0,
                 ];
             });
 

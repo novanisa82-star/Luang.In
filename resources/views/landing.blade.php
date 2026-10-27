@@ -153,8 +153,8 @@
                         <span>Instant WA Connection</span>
                     </span>
                     <span class="flex items-center gap-1.5">
-                        <span class="material-symbols-outlined text-amber-500 text-[18px]">star</span>
-                        <span>Rating Per Lowongan</span>
+                        <span class="material-symbols-outlined text-amber-500 text-[18px]">verified</span>
+                        <span>Cepat &amp; Transparan</span>
                     </span>
                 </div>
             </div>
@@ -230,8 +230,8 @@
                 <p class="text-xs text-gray-500 font-semibold mt-1">Tingkat Hadir &amp; Ketepatan Waktu</p>
             </div>
             <div class="p-3 rounded-2xl hover:bg-amber-50/50 transition" data-aos="fade-up" data-aos-delay="400">
-                <h3 class="text-2xl sm:text-3xl font-black text-amber-500">4.9 / 5</h3>
-                <p class="text-xs text-gray-500 font-semibold mt-1">Rating Kepuasan Rekrutmen</p>
+                <h3 class="text-2xl sm:text-3xl font-black text-amber-500">100%</h3>
+                <p class="text-xs text-gray-500 font-semibold mt-1">Gratis Tanpa Potongan Biaya</p>
             </div>
         </div>
     </section>
@@ -295,7 +295,7 @@
                     <h3 class="text-xl font-extrabold text-gray-900 leading-tight">Pekerja Serabutan</h3>
 
                     <p class="text-xs text-gray-600 leading-relaxed">
-                        Temukan lowongan kerja harian di dekat lokasi domisili Anda. Kirim lamaran instant, dapatkan instruksi penugasan, dan kumpulkan rating bintang.
+                        Temukan lowongan kerja harian di dekat lokasi domisili Anda. Kirim lamaran instant, dapatkan instruksi penugasan, dan mulai bekerja langsung.
                     </p>
                 </div>
 
@@ -375,11 +375,11 @@
                 <div class="p-6 rounded-2xl bg-[#f8f9fa] border border-gray-200/80 space-y-3 card-hover-effect"
                      data-aos="zoom-in" data-aos-delay="300">
                     <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-[22px]">star</span>
+                        <span class="material-symbols-outlined text-[22px]">bolt</span>
                     </div>
-                    <h4 class="font-bold text-gray-900 text-sm">Rating Per Lowongan</h4>
+                    <h4 class="font-bold text-gray-900 text-sm">Respon &amp; Rekrutmen Cepat</h4>
                     <p class="text-xs text-gray-600 leading-relaxed">
-                        Penilaian ulasan bintang dan umpan balik yang terstruktur secara spesifik untuk masing-masing posisi pekerjaan serabutan.
+                        Sistem seleksi cepat untuk kebutuhan tenaga kerja harian tanpa proses berbelit-belit.
                     </p>
                 </div>
 

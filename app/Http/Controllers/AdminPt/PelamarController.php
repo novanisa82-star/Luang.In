@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Pekerjaan;
 use App\Models\Application;
 use App\Models\User;
-use App\Models\Rating;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -104,7 +103,7 @@ class PelamarController extends Controller
             $q->where('user_id', $adminId);
         })
             ->where('status', 'diterima')
-            ->with(['user', 'pekerjaan', 'ratings']);
+            ->with(['user', 'pekerjaan']);
 
         // Filter pencarian nama pelamar atau judul pekerjaan
         if ($request->filled('search')) {
@@ -139,22 +138,6 @@ class PelamarController extends Controller
         $tingkatHadir = '98.4%';
         $kesiapanWa = '100% Aktif';
 
-        // Rating rata-rata yang diterima PT ini
-        $ratingRataRata = null;
-        $totalRating = 0;
-
-        if (Schema::hasTable('ratings')) {
-            $totalRating = Rating::whereHas('pekerjaan', function ($q) use ($adminId) {
-                $q->where('user_id', $adminId);
-            })->count();
-
-            $ratingRataRata = $totalRating > 0
-                ? round(Rating::whereHas('pekerjaan', function ($q) use ($adminId) {
-                    $q->where('user_id', $adminId);
-                })->avg('bintang'), 1)
-                : null;
-        }
-
         // Paginasi 5 per halaman
         $pelamars = $query->latest('updated_at')
             ->paginate(5)
@@ -165,9 +148,7 @@ class PelamarController extends Controller
             'totalTerpilih',
             'pekerjaMingguIni',
             'tingkatHadir',
-            'kesiapanWa',
-            'ratingRataRata',
-            'totalRating'
+            'kesiapanWa'
         ));
     }
 

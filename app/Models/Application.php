@@ -18,14 +18,6 @@ class Application extends Model
         return $this->belongsTo(Pekerjaan::class);
     }
 
-    /**
-     * Rating yang diberikan untuk lamaran ini.
-     */
-    public function ratings()
-    {
-        return $this->hasMany(Rating::class);
-    }
-
     // Mendapatkan 2 huruf inisial dari nama pelamar (e.g. Budi Prasetyo -> BP)
     public function getInisialAttribute()
     {
@@ -67,12 +59,12 @@ class Application extends Model
     public function getKualifikasiTagAttribute()
     {
         $tags = [
-            ['type' => 'rating', 'label' => '4.9 (42 ulasan)'],
             ['type' => 'badge', 'label' => 'Siap Lembur', 'icon' => 'check'],
             ['type' => 'badge', 'label' => 'Logistik Gudang', 'icon' => 'inventory_2'],
             ['type' => 'badge', 'label' => 'Standby', 'icon' => 'schedule'],
-            ['type' => 'rating', 'label' => '4.8 (30 ulasan)'],
             ['type' => 'badge', 'label' => 'Bongkar Muat', 'icon' => 'front_loader'],
+            ['type' => 'badge', 'label' => 'Fisik Prima', 'icon' => 'fitness_center'],
+            ['type' => 'badge', 'label' => 'Cepat & Cekatan', 'icon' => 'bolt'],
         ];
 
         return $tags[($this->id ?? 1) % count($tags)];

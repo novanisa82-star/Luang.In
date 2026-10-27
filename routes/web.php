@@ -5,11 +5,9 @@ use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\AdminPt\DashboardController as AdminPtDashboardController;
 use App\Http\Controllers\AdminPt\LowonganController;
 use App\Http\Controllers\AdminPt\PelamarController;
-use App\Http\Controllers\AdminPt\RatingController as AdminPtRatingController;
 use App\Http\Controllers\Superadmin\DashboardController as SuperadminDashboardController;
 use App\Http\Controllers\Superadmin\LaporanController as SuperadminLaporanController;
 use App\Http\Controllers\Superadmin\KelolaAkunController as SuperadminKelolaAkunController;
-use App\Http\Controllers\User\RatingController;
 
 // Rute Halaman Utama / Landing Page Statis
 Route::get('/', function () {
@@ -56,9 +54,6 @@ Route::middleware(['admin.auth'])->group(function () {
         Route::get('/admin/pelamar', [PelamarController::class, 'index'])->name('pelamar.index');
         Route::get('/admin/riwayat', [PelamarController::class, 'riwayat'])->name('riwayat.index');
         Route::patch('/admin/pelamar/{id}/status', [PelamarController::class, 'updateStatus'])->name('pelamar.update_status');
-
-        // Rute Ulasan & Rating dari Pelamar
-        Route::get('/admin/rating', [AdminPtRatingController::class, 'index'])->name('rating.index');
     });
 
     // Rute Khusus Superadmin (Verifikasi PT, Moderasi Lowongan, Kelola Laporan & Akun PT)
@@ -81,10 +76,4 @@ Route::middleware(['admin.auth'])->group(function () {
         Route::patch('/admin/superadmin/akun/{id}/status-verifikasi', [SuperadminKelolaAkunController::class, 'updateStatusVerifikasi'])->name('superadmin.akun.update_status');
         Route::delete('/admin/superadmin/akun/{id}', [SuperadminKelolaAkunController::class, 'destroy'])->name('superadmin.akun.destroy');
     });
-});
-
-// Rute Rating Pelamar (User yang sudah login dan lamarannya diterima)
-Route::middleware(['auth'])->name('user.')->group(function () {
-    Route::get('/rating/{applicationId}', [RatingController::class, 'show'])->name('rating.show');
-    Route::post('/rating/{applicationId}', [RatingController::class, 'store'])->name('rating.store');
 });
