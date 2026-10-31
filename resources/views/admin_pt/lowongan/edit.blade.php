@@ -155,7 +155,7 @@
                         </div>
                         <div>
                             <label for="input-durasi" class="block text-sm font-bold text-gray-800 mb-2">
-                                Durasi Kerja <span class="text-red-500">*</span>
+                                Durasi Kerja (Shift) <span class="text-red-500">*</span>
                             </label>
                             <div class="bg-[#f8f9fa] border border-gray-200/90 rounded-xl px-4 py-3 flex items-center gap-3 focus-within:bg-white focus-within:border-purple-600 focus-within:ring-2 focus-within:ring-purple-100 transition">
                                 <span class="material-symbols-outlined text-gray-400 text-[20px]">schedule</span>
@@ -164,6 +164,57 @@
                                     placeholder="contoh: 1 Hari (Pukul 08.00 - 16.00 WIB)"
                                     class="w-full bg-transparent text-sm text-gray-800 focus:outline-none placeholder:text-gray-400 font-medium">
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Batas Waktu Pembukaan Lowongan (Deadline) -->
+                    <div class="p-4 rounded-2xl bg-amber-50/50 border border-amber-200/80 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <label for="input-deadline" class="text-sm font-bold text-gray-800 flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-amber-600 text-[18px]">timer</span>
+                                <span>Batas Waktu Pembukaan Lowongan (Kadaluarsa)</span>
+                            </label>
+                            @if($lowongan->is_expired)
+                                <span class="text-[11px] text-red-700 font-bold bg-red-100 px-2.5 py-0.5 rounded-full">
+                                    Kadaluarsa / Lewat Batas
+                                </span>
+                            @else
+                                <span class="text-[11px] text-emerald-700 font-bold bg-emerald-100 px-2.5 py-0.5 rounded-full">
+                                    {{ $lowongan->sisa_waktu }}
+                                </span>
+                            @endif
+                        </div>
+                        <p class="text-xs text-gray-500">
+                            Perpanjang atau ubah batas waktu pembukaan pendaftaran bagi pelamar.
+                        </p>
+                        
+                        <!-- Pilihan Cepat Preset Waktu -->
+                        <div class="flex flex-wrap items-center gap-2 pt-1">
+                            <span class="text-xs font-semibold text-gray-600 mr-1">Perpanjang cepat:</span>
+                            <button type="button" onclick="setDeadlinePreset(12)"
+                                class="px-2.5 py-1 rounded-lg bg-white border border-amber-200 text-xs font-semibold text-gray-700 hover:bg-amber-100 transition shadow-2xs">
+                                +12 Jam
+                            </button>
+                            <button type="button" onclick="setDeadlinePreset(24)"
+                                class="px-2.5 py-1 rounded-lg bg-white border border-amber-200 text-xs font-semibold text-gray-700 hover:bg-amber-100 transition shadow-2xs">
+                                +1 Hari
+                            </button>
+                            <button type="button" onclick="setDeadlinePreset(72)"
+                                class="px-2.5 py-1 rounded-lg bg-white border border-amber-200 text-xs font-semibold text-gray-700 hover:bg-amber-100 transition shadow-2xs">
+                                +3 Hari
+                            </button>
+                            <button type="button" onclick="setDeadlinePreset(168)"
+                                class="px-2.5 py-1 rounded-lg bg-white border border-amber-200 text-xs font-semibold text-gray-700 hover:bg-amber-100 transition shadow-2xs">
+                                +7 Hari
+                            </button>
+                        </div>
+
+                        <!-- Input Datetime -->
+                        <div class="bg-white border border-amber-300 rounded-xl px-4 py-2.5 flex items-center gap-3 focus-within:ring-2 focus-within:ring-amber-200 transition">
+                            <span class="material-symbols-outlined text-amber-600 text-[20px]">event</span>
+                            <input type="datetime-local" id="input-deadline" name="deadline_pendaftaran"
+                                value="{{ old('deadline_pendaftaran', $lowongan->deadline_pendaftaran ? $lowongan->deadline_pendaftaran->format('Y-m-d\TH:i') : '') }}"
+                                class="w-full bg-transparent text-sm text-gray-800 focus:outline-none font-medium">
                         </div>
                     </div>
 
@@ -465,6 +516,19 @@
                 }
             }
         });
+        window.setDeadlinePreset = function(hours) {
+            const now = new Date();
+            now.setHours(now.getHours() + hours);
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const inputDeadline = document.getElementById('input-deadline');
+            if (inputDeadline) {
+                inputDeadline.value = `${year}-${month}-${day}T${h}:${m}`;
+            }
+        };
     });
 </script>
 @endpush

@@ -175,9 +175,6 @@
                                 </span>
                             </div>
                         </div>
-                        <span class="px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-bold border border-amber-200/60">
-                            4.9 ★
-                        </span>
                     </div>
 
                     <div class="space-y-3">
@@ -195,9 +192,6 @@
                                 <span class="material-symbols-outlined text-purple-600 text-[18px]">group</span>
                                 <span>12 Pelamar Masuk</span>
                             </div>
-                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
-                                4 Diterima
-                            </span>
                         </div>
                     </div>
 
@@ -417,9 +411,15 @@
                 <div class="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-sm card-hover-effect flex flex-col justify-between space-y-4"
                      data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
                     <div>
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-100">
-                            {{ $job->durasi ?? 'Harian' }}
-                        </span>
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-100">
+                                {{ $job->durasi ?? 'Harian' }}
+                            </span>
+                            <span class="text-[10px] text-gray-400 font-medium flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[13px]">schedule</span>
+                                {{ $job->created_at ? $job->created_at->diffForHumans() : 'Baru saja' }}
+                            </span>
+                        </div>
                         <h4 class="font-bold text-gray-900 text-sm mt-2 line-clamp-1">{{ $job->judul }}</h4>
                         <p class="text-xs text-emerald-700 font-extrabold mt-1">
                             Rp {{ number_format((float)$job->upah, 0, ',', '.') }}
@@ -430,10 +430,16 @@
                     </div>
 
                     <div class="pt-3 border-t border-gray-100 flex items-center justify-between">
-                        <span class="text-[11px] text-gray-400 font-medium">
-                            {{ $job->user->name ?? 'Mitra PT' }}
-                        </span>
-                        <a href="{{ route('login') }}" class="px-3 py-1.5 rounded-lg bg-gray-900 hover:bg-black text-white text-xs font-bold transition-all duration-200 shadow-sm hover:scale-105">
+                        <div>
+                            <span class="text-[11px] text-gray-700 font-bold block leading-tight truncate max-w-[130px]">
+                                {{ $job->user->name ?? 'Mitra PT' }}
+                            </span>
+                            <span class="text-[10px] text-purple-700 font-semibold flex items-center gap-1 mt-0.5">
+                                <span class="material-symbols-outlined text-[13px] text-purple-600">group</span>
+                                {{ $job->applications_count ?? ($job->applications ? $job->applications->count() : 0) }} Pelamar
+                            </span>
+                        </div>
+                        <a href="{{ route('login') }}" class="px-3.5 py-1.5 rounded-lg bg-gray-900 hover:bg-black text-white text-xs font-bold transition-all duration-200 shadow-sm hover:scale-105 shrink-0">
                             Lamar
                         </a>
                     </div>

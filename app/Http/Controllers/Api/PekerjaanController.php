@@ -11,6 +11,7 @@ class PekerjaanController extends Controller
     public function index(): JsonResponse
     {
         $pekerjaans = Pekerjaan::with('user')
+            ->withCount('applications')
             ->where('status_moderasi', 'disetujui')
             ->where('status_loker', 'aktif')
             ->latest()
@@ -32,6 +33,8 @@ class PekerjaanController extends Controller
                     'nama_pt' => $pekerjaan->user?->name,
                     'rating' => null,
                     'total_rating' => 0,
+                    'total_pelamar' => $pekerjaan->applications_count ?? 0,
+                    'waktu_tayang' => $pekerjaan->created_at ? $pekerjaan->created_at->diffForHumans() : 'Baru saja',
                 ];
             });
 

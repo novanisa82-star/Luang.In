@@ -41,6 +41,7 @@ Route::prefix('mobile')->group(function () {
         );
         Route::get('/riwayat-lamaran', [LamaranController::class, 'index']
         );
+        Route::post('/profile/photo', [MobileAuthController::class, 'updatePhoto']);
     });
     Route::get('/pekerjaan', [PekerjaanController::class, 'index']);
 });

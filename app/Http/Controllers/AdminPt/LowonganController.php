@@ -53,6 +53,25 @@ class LowonganController extends Controller
 
         $isDraft = $request->input('action') === 'draft';
 
+        $deadline = null;
+        if ($request->filled('deadline_pendaftaran')) {
+            try {
+                $deadline = \Carbon\Carbon::parse($request->deadline_pendaftaran);
+            } catch (\Exception $e) {
+                $deadline = null;
+            }
+        } elseif ($request->filled('durasi_buka')) {
+            $deadline = match ($request->durasi_buka) {
+                '6_jam' => now()->addHours(6),
+                '12_jam' => now()->addHours(12),
+                '1_hari' => now()->addDay(),
+                '2_hari' => now()->addDays(2),
+                '3_hari' => now()->addDays(3),
+                '7_hari' => now()->addDays(7),
+                default => null,
+            };
+        }
+
         Pekerjaan::create([
             'user_id' => Auth::id(),
             'judul' => $request->judul,
@@ -61,6 +80,7 @@ class LowonganController extends Controller
             'longitude' => $request->longitude ?? 106.816666,
             'upah' => $request->upah,
             'durasi' => $request->durasi,
+            'deadline_pendaftaran' => $deadline,
             'status_moderasi' => $isDraft ? 'menunggu' : 'menunggu',
             'status_loker' => $isDraft ? 'ditutup' : 'aktif',
         ]);
@@ -131,6 +151,25 @@ class LowonganController extends Controller
             $deskripsiLengkap .= "\nSkill yang dibutuhkan: " . $skills;
         }
 
+        $deadline = $lowongan->deadline_pendaftaran;
+        if ($request->filled('deadline_pendaftaran')) {
+            try {
+                $deadline = \Carbon\Carbon::parse($request->deadline_pendaftaran);
+            } catch (\Exception $e) {
+                // biarkan nilai lama
+            }
+        } elseif ($request->filled('durasi_buka')) {
+            $deadline = match ($request->durasi_buka) {
+                '6_jam' => now()->addHours(6),
+                '12_jam' => now()->addHours(12),
+                '1_hari' => now()->addDay(),
+                '2_hari' => now()->addDays(2),
+                '3_hari' => now()->addDays(3),
+                '7_hari' => now()->addDays(7),
+                default => $lowongan->deadline_pendaftaran,
+            };
+        }
+
         $lowongan->update([
             'judul' => $request->judul,
             'deskripsi' => $deskripsiLengkap,
@@ -138,6 +177,7 @@ class LowonganController extends Controller
             'longitude' => $request->longitude ?? $lowongan->longitude ?? 106.816666,
             'upah' => $request->upah,
             'durasi' => $request->durasi,
+            'deadline_pendaftaran' => $deadline,
             'status_loker' => $request->input('status_loker', $lowongan->status_loker ?? 'aktif'),
         ]);
 

@@ -13,11 +13,17 @@ use App\Http\Controllers\Superadmin\KelolaAkunController as SuperadminKelolaAkun
 Route::get('/', function () {
     $lowongans = \App\Models\Pekerjaan::where('status_loker', 'aktif')
         ->where('status_moderasi', 'disetujui')
+        ->with('user')
+        ->withCount('applications')
         ->latest()
         ->take(4)
         ->get();
     if ($lowongans->isEmpty()) {
-        $lowongans = \App\Models\Pekerjaan::latest()->take(4)->get();
+        $lowongans = \App\Models\Pekerjaan::with('user')
+            ->withCount('applications')
+            ->latest()
+            ->take(4)
+            ->get();
     }
     return view('landing', compact('lowongans'));
 })->name('landing');

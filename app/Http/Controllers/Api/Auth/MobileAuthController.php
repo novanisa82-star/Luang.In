@@ -137,4 +137,60 @@ class MobileAuthController extends Controller
             'message' => 'Logout berhasil',
         ]);
     }
+
+    public function me(Request $request)
+    {
+        return response()->json([
+            'user' => $request->user(),
+        ]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'whatsapp' => ['nullable', 'string', 'max:20'],
+            'domisili' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $user = $request->user();
+
+        $user->name = $data['name'];
+        $user->whatsapp = $data['whatsapp'] ?? null;
+        $user->domisili = $data['domisili'] ?? null;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Profil berhasil diperbarui.',
+            'user' => $user->fresh(),
+        ]);
+    }
+
+    public function updatePhoto(Request $request)
+    {
+        $request->validate([
+            'foto_profil' => [
+                'required',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:5120',
+            ],
+        ]);
+
+        $user = $request->user();
+
+        if ($user->foto_profil) {
+            Storage::disk('public')->delete($user->foto_profil);
+        }
+
+        $path = $request->file('foto_profil')->store('profil', 'public');
+
+        $user->foto_profil = $path;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Foto profil berhasil diperbarui.',
+            'user' => $user->fresh(),
+        ]);
+    }
 }

@@ -311,7 +311,11 @@
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="material-symbols-outlined text-gray-400 text-[17px] shrink-0">schedule</span>
-                                <span class="truncate font-medium text-gray-600">{{ $lowongan->durasi }}</span>
+                                <span class="truncate font-medium text-gray-600">{{ $lowongan->durasi }} &bull; {{ $lowongan->created_at ? $lowongan->created_at->diffForHumans() : 'Baru saja' }}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-purple-600 text-[17px] shrink-0">group</span>
+                                <span class="font-semibold text-purple-700">{{ $lowongan->applications ? $lowongan->applications->count() : 0 }} Pelamar Terdaftar</span>
                             </div>
                         </div>
                     </div>
