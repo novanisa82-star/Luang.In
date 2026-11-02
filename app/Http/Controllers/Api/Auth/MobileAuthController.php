@@ -8,8 +8,8 @@ use App\Models\SkillProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Validation\ValidationException;
 
 class MobileAuthController extends Controller
 {
@@ -26,7 +26,6 @@ class MobileAuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::min(8)],
-
             'whatsapp' => ['required', 'string', 'max:20'],
             'domisili' => ['nullable', 'string', 'max:255'],
             'primary_role' => ['required', 'string', 'max:255'],
@@ -83,7 +82,6 @@ class MobileAuthController extends Controller
         ], 201);
     }
 
-
     public function login(Request $request)
     {
         $data = $request->validate([
@@ -121,7 +119,6 @@ class MobileAuthController extends Controller
         ]);
     }
 
-
     public function me(Request $request)
     {
         return response()->json([
@@ -134,14 +131,7 @@ class MobileAuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Logout berhasil',
-        ]);
-    }
-
-    public function me(Request $request)
-    {
-        return response()->json([
-            'user' => $request->user(),
+            'message' => 'Logout berhasil.',
         ]);
     }
 
@@ -179,11 +169,11 @@ class MobileAuthController extends Controller
 
         $user = $request->user();
 
+        $path = $request->file('foto_profil')->store('profil', 'public');
+
         if ($user->foto_profil) {
             Storage::disk('public')->delete($user->foto_profil);
         }
-
-        $path = $request->file('foto_profil')->store('profil', 'public');
 
         $user->foto_profil = $path;
         $user->save();
@@ -191,6 +181,35 @@ class MobileAuthController extends Controller
         return response()->json([
             'message' => 'Foto profil berhasil diperbarui.',
             'user' => $user->fresh(),
+        ]);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $data = $request->validate([
+            'current_password' => ['required', 'string'],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                'different:current_password',
+            ],
+        ]);
+
+        $user = $request->user();
+
+        if (!Hash::check($data['current_password'], $user->password)) {
+            return response()->json([
+                'message' => 'Password lama tidak sesuai.',
+            ], 422);
+        }
+
+        $user->password = Hash::make($data['password']);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Password berhasil diperbarui.',
         ]);
     }
 }

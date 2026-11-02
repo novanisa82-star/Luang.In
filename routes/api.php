@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -14,15 +13,9 @@ Route::get('/test', function () {
 });
 
 Route::prefix('mobile')->group(function () {
-    Route::post(
-        '/register',
-        [MobileAuthController::class, 'register']
-    );
+    Route::post('/register', [MobileAuthController::class, 'register']);
 
-    Route::post(
-        '/complete-registration',
-        [MobileAuthController::class, 'completeRegistration']
-    );
+    Route::post('/complete-registration', [MobileAuthController::class, 'completeRegistration']);
 
     Route::post('/login', [MobileAuthController::class, 'login']);
 
@@ -30,18 +23,15 @@ Route::prefix('mobile')->group(function () {
         Route::get('/me', [MobileAuthController::class, 'me']);
         Route::post('/logout', [MobileAuthController::class, 'logout']);
 
-        Route::get(
-            '/skill-profile',
-            [SkillProfileController::class, 'show']
-        );
+        Route::get('/skill-profile', [SkillProfileController::class, 'show']);
+        Route::post('/skill-profile', [SkillProfileController::class, 'store']);
 
-        Route::post(
-            '/skill-profile',
-            [SkillProfileController::class, 'store']
-        );
-        Route::get('/riwayat-lamaran', [LamaranController::class, 'index']
-        );
+        Route::get('/riwayat-lamaran', [LamaranController::class, 'index']);
+
+        Route::put('/profile', [MobileAuthController::class, 'updateProfile']);
         Route::post('/profile/photo', [MobileAuthController::class, 'updatePhoto']);
+        Route::put('/change-password', [MobileAuthController::class, 'changePassword']);
     });
+
     Route::get('/pekerjaan', [PekerjaanController::class, 'index']);
 });
